@@ -2,8 +2,9 @@
 
 //1. Nombre y archivos a cachear
 const CACHE_NAME = "mi-pwa-cache-v1";
-const BASE_PATH = "pwa-ejemploPro/"; // Asegúrate de que esta ruta sea correcta
+const BASE_PATH = "/pwa-ejemploPro/"; // Asegúrate de que esta ruta sea correcta
 const urlsToCache = [
+    `${BASE_PATH}`,
     `${BASE_PATH}index.html`,
     `${BASE_PATH}manifest.json`,
     `${BASE_PATH}offline.html`,
@@ -15,7 +16,7 @@ const urlsToCache = [
 // Se dispara la primera vez que se registra un ServiceWorker
 self.addEventListener("install", event => {
     event.waitUntil(
-        cache.open(CACHE_NAME).then(cache.addAll(urlsToCache))
+        caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
     );
 });
 
@@ -30,6 +31,7 @@ self.addEventListener("activate", event => {
             )
         )
     );
+    return self.clients.claim();
 });
 
 //4. FETCH -> Interceptar las peticiones de la PWA
