@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi primera PWA</title>
-    
-    <!-- Vincular el manifest -->
-    <link rel="manifest" href="./manifest.json">
-    
-    <!-- Control de la barra de navegacion -->
-    <meta name="theme-color" content="#2196f3">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi primera PWA</title>
+
+  <!-- Vincular el manifest -->
+  <link rel="manifest" href="./manifest.json">
+
+  <!-- Control de la barra de navegación -->
+  <meta name="theme-color" content="#2196f3">
 </head>
 <body>
-    <h1>Bienvenido a mi PWA</h1>
-    <p>Se puede instalar como aplicacion en tu movil</p>
-    
-    <button onclick="alert('Hola desde la PWA')">Click aqui</button>
-    
-    <!-- Registrar el Service Worker -->
-    <script>
-        if ('serviceWorker' in navigator){
-            navigator.serviceWorker.register('./sw.js')
-            .then(reg => console.log("Service Worker registrado"))
-            .catch(err => console.log("Error al registrar el Service Worker"))
-        }
-    </script>
+  <h1>Bienvenido a mi PWA</h1>
+  <p>Se puede instalar como aplicación en tu móvil</p>
+  <button onclick="alert('Hola desde la PWA')">Haz clic aquí</button>
+
+  <!-- Registrar el Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      const swPath = window.location.pathname.includes('pwa-ejemplo')
+        ? '/pwa-ejemplo/sw.js'
+        : '/sw.js';
+
+      navigator.serviceWorker.register(swPath)
+        .then(reg => console.log("✅ Service Worker registrado:", reg.scope))
+        .catch(err => console.error("❌ Error al registrar el Service Worker:", err));
+    }
+  </script>
 </body>
-</html> 
+</html>
